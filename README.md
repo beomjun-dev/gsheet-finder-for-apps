@@ -5,3 +5,4 @@ Google apps script for spreadsheet apps that cannot search for entire sheets.
 
 ### Preview Screen
 ![image](https://user-images.githubusercontent.com/108355517/181061398-113655c3-fb4f-4a55-81c6-32734763d432.png)
+![image](https://user-images.githubusercontent.com/108355517/181062294-c6c8baf1-e52b-482c-8706-912ad04536bf.png)
