@@ -8,7 +8,7 @@ Google apps script for spreadsheet apps that cannot search for entire sheets.
 ![image](https://user-images.githubusercontent.com/108355517/181062294-c6c8baf1-e52b-482c-8706-912ad04536bf.png)
 
 ### Description
-안드로이드 스프레드시트 앱에서는 Ctrl + F 기능을 통한 시트 전체 검색 기능이 지원되지 않아, 
+안드로이드 스프레드시트 앱에서는 Ctrl + F 기능을 통한 시트 전체 검색 기능이 지원되지 않아, <br>
 Google Apps Script를 실행하여 검색결과를 표시하는 기능이 구현되어 있습니다.
 
 1. 빨간 박스(A2) 셀에 검색할 문자열을 입력
