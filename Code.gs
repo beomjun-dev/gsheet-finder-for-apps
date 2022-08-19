@@ -31,6 +31,27 @@ function 결과지우기() {
   clearResultContents(sheet);
 }
 
+function createHyperlinkGoToSheet(count) {
+  var activeSheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var targetRange = activeSheet.getRange('D9');
+  var targetX = targetRange.getRow();
+  var targetY = targetRange.getColumn();
+  
+  if(count >= 0) {
+    for(var i = targetX; i < targetX + count; i++) {
+      
+      var linkedSheet = SpreadsheetApp.getActive().getSheetByName(
+        activeSheet.getRange(i, targetY - 2).getValue());
+      
+      var gid = linkedSheet.getSheetId();
+      // 해당 Contents가 적힌 Cell Notation. (B + Row Number)
+      var linkedCellNotation = 'B' + activeSheet.getRange(i, targetY - 3).getValue();
+      
+      activeSheet.getRange(i, targetY)
+      .setValue('=hyperlink("#gid=' + gid + "&range=" + linkedCellNotation + '","시트로 이동")');
+    }
+  }
+}
 
 function findWord() {
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
@@ -64,6 +85,9 @@ function findWord() {
           )
       }
   }
+  
+  // D열에 검색결과에 해당하는 시트의 행으로 이동하는 링크를 만든다.
+  createHyperlinkgoToSheet(x - 9);
 
   sheet.getRange(x, y).setValue("검색 결과 \t\t\t\t\t\t\t\t\t\t\t\t 총 " + (x - 9) + "개");
 
@@ -76,7 +100,7 @@ function getContents(row, sheetObj) {
 function clearResultContents(sheetObj) {
   var x = 9;
 
-  sheetObj.getRange('A'+ x + ':' + 'C999').clear();
+  sheetObj.getRange('A'+ x + ':' + 'D999').clear();
   console.log('clear finish.')
 }
 
