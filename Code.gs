@@ -1,18 +1,45 @@
 function onEdit(e) {
+
+  if (e.range.getA1Notation() == 'A2' && e.value != undefined) {
+    console.log('A2 Edited:  ' + e.value)
+    e.source.setActiveSelection(e.range.offset(0, 1));
+  }
+  
   if (e.range.getA1Notation() == 'B2' && e.value != undefined) {
       console.log('e.value: ' + e.value)
 
     // /regex/.test(e.value): 누군가가 B2 셀에 넣은 악성 코드를 실행하고 있지 않은지 확인하는 것
     if (/^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]*/.test(e.value)) {
       // eval(e.value)(): 함수를 호출하면 B2에 적힌 문자열로 이름되어 있는 function이 실행됨.
-      eval(e.value)();
+      eval('검색')();
       e.range.clear();
     }
     else {
       console.log('else e.value: ' + e.value)
       console.log('else e.range.getA1Notation(): ' + e.range.getA1Notation())
     }
+
+    e.source.setActiveSelection(e.range.offset(0, -1));
   }
+  
+  if (e.range.getA1Notation() == 'B4' && e.value != undefined) {
+      console.log('e.value: ' + e.value)
+
+    // /regex/.test(e.value): 누군가가 B2 셀에 넣은 악성 코드를 실행하고 있지 않은지 확인하는 것
+    if (/^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]*/.test(e.value)) {
+      // eval(e.value)(): 함수를 호출하면 B2에 적힌 문자열로 이름되어 있는 function이 실행됨.
+      eval('결과지우기')();
+      e.range.clear();
+    }
+    else {
+      console.log('else e.value: ' + e.value)
+      console.log('else e.range.getA1Notation(): ' + e.range.getA1Notation())
+    }
+
+    e.source.setActiveSelection(e.range.offset(-2, -1));
+  }
+
+
 }
 
 function 검색() {
@@ -31,7 +58,7 @@ function 결과지우기() {
   clearResultContents(sheet);
 }
 
-function createHyperlinkGoToSheet(count) {
+function createHyperlinkgoToSheet(count) {
   var activeSheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var targetRange = activeSheet.getRange('D9');
   var targetX = targetRange.getRow();
@@ -67,8 +94,12 @@ function findWord() {
 
   for(var i = 0; i < sheets.length; i++) {
     if (sheets[i].getName() == sheet.getName()) continue;
-
-    var rangeAry = sheets[i].createTextFinder(word).findAll();
+    
+    var lastRowNum = sheets[i].getLastRow();
+    if(lastRowNum == 0) continue;
+    
+    var range = sheets[i].getRange(3, 2, lastRowNum, 1);
+    var rangeAry = range.createTextFinder(word).findAll();
 
       for(var j = 0; j < rangeAry.length; j++, x++) {
         contentsRow = rangeAry[j].getRow()
